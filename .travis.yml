@@ -1,0 +1,20 @@
+language: android
+
+android:
+  components:
+    - build-tools-26.0.1
+    - android-26
+    - android-22
+    - extra-google-m2repository
+    - extra-android-m2repository
+    - sys-img-armeabi-v7a-android-22
+  licenses:
+      - '.+'
+
+before_script:
+  - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a
+  - emulator -avd test -no-window &
+  - android-wait-for-emulator
+  - adb shell input keyevent 82 &
+
+script: ./gradlew connectedAndroidTest --stacktrace
