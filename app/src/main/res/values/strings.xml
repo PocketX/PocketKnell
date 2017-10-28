@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Knell</string>
+    <string name="choose_date">选择你的生日</string>
+    <string name="save_over">保存完毕</string>
 </resources>
