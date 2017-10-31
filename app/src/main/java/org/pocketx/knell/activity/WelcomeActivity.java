@@ -4,13 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import android.util.Log;
 
 import org.pocketx.knell.R;
 import org.pocketx.knell.base.BaseActivity;
-import org.pocketx.knell.utils.ConstantUtils;
-import org.pocketx.knell.utils.SPUtils;
 
 /**
  * Created by Shadow on 2017/10/2320:48.
@@ -33,15 +30,16 @@ public class WelcomeActivity extends BaseActivity {
      */
     private void checkSP() {
         //判断sp中是否存储有值，如果有，跳转到时钟界面
-        String spBirthday = SPUtils.getInstance().getString(ConstantUtils.BIRTHDAY);
-        if (TextUtils.isEmpty(spBirthday)) {
-            Log.d(TAG, "onCreate: sp没有值");
-            Intent intent = new Intent(this, ChooseDateActivity.class);
-            startActivity(intent);
+//        String spBirthday = SPUtils.getInstance().getString(ConstantUtils.BIRTHDAY);
+        Intent intent;
+//        if (TextUtils.isEmpty(spBirthday)) {
+        if (getBirthdayManager().exist()) {
+            intent = new Intent(this, KnellActivity.class);
         } else {
-            Intent intent = new Intent(this, KnellActivity.class);
-            startActivity(intent);
+            Log.d(TAG, "onCreate: sp没有值");
+            intent = new Intent(this, ChooseDateActivity.class);
         }
+        startActivity(intent);
         finish();
     }
 }

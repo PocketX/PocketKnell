@@ -1,8 +1,10 @@
 package org.pocketx.knell.domain;
 
-public interface BirthdayRepository {
+public interface BirthdayManager {
 
     void set(Birthday birthday);
 
     Birthday get();
+
+    boolean exist();
 }

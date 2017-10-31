@@ -9,8 +9,7 @@ import android.widget.Toast;
 
 import org.pocketx.knell.R;
 import org.pocketx.knell.base.BaseActivity;
-import org.pocketx.knell.utils.ConstantUtils;
-import org.pocketx.knell.utils.SPUtils;
+import org.pocketx.knell.domain.Birthday;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -27,15 +26,16 @@ public class ChooseDateActivity extends BaseActivity {
                 Log.d(TAG, "onDateSet: year = " + year + " month = " + month + " dayOfMonth = " + dayOfMonth);
                 //将日期存到SP，然后跳转到时钟界面
                 //如果month是一位数，前面补一个0
-                String tempMonth;
-                if ((month + "").length() == 1) {
-                    tempMonth = "0" + month;
-                } else {
-                    tempMonth = month + "";
-                }
-                SPUtils.getInstance().put(ConstantUtils.BIRTHDAY, year + "-" + tempMonth + "-" + dayOfMonth);
+//                String tempMonth;
+//                if ((month + "").length() == 1) {
+//                    tempMonth = "0" + month;
+//                } else {
+//                    tempMonth = month + "";
+//                }
+//                SPUtils.getIn|stance().put(ConstantUtils.BIRTHDAY, year + "-" + tempMonth + "-" + dayOfMonth);
+                getBirthdayManager().set(Birthday.create(year, month+1, dayOfMonth));
                 Toast.makeText(ChooseDateActivity.this, R.string.save_over, Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(ChooseDateActivity. this,KnellActivity.class));
+                startActivity(new Intent(ChooseDateActivity.this, KnellActivity.class));
                 finish();
             }
         }, 1995, 7, 19);
