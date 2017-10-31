@@ -10,7 +10,7 @@ public final class Birthday {
         this.year = year;
         this.month = month;
         this.day = day;
-        }
+    }
 
     public static Birthday create(int year, int month, int day) {
         return new Birthday(year, month, day);
