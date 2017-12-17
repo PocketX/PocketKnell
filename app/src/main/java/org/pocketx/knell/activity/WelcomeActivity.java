@@ -10,7 +10,9 @@ import org.pocketx.knell.R;
 import org.pocketx.knell.base.BaseActivity;
 
 /**
- * Created by Shadow on 2017/10/2320:48.
+ * 欢迎界面
+ * @author Shadow
+ * @date 2017/10/23 20:48
  */
 
 public class WelcomeActivity extends BaseActivity {
@@ -22,7 +24,7 @@ public class WelcomeActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
-        new Handler().postDelayed(() -> checkSP(), 1000);
+        new Handler().postDelayed(this::checkSP, 1500);
     }
 
     /**
@@ -30,9 +32,7 @@ public class WelcomeActivity extends BaseActivity {
      */
     private void checkSP() {
         //判断sp中是否存储有值，如果有，跳转到时钟界面
-//        String spBirthday = SPUtils.getInstance().getString(ConstantUtils.BIRTHDAY);
         Intent intent;
-//        if (TextUtils.isEmpty(spBirthday)) {
         if (getBirthdayManager().exist()) {
             intent = new Intent(this, KnellActivity.class);
         } else {

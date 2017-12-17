@@ -8,7 +8,9 @@ import org.pocketx.knell.utils.Injector;
 import org.pocketx.knell.utils.Utils;
 
 /**
- * Created by Shadow on 2017/10/2215:10.
+ *
+ * @author Shadow
+ * @date 2017/10/2215:10
  */
 
 public final class App extends Application {

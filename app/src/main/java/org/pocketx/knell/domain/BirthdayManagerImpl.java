@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 /**
- * Created by zhangchao on 2017/10/31.
+ *
+ * @author zhangchao
+ * @date 2017/10/31
  */
 
 public final class BirthdayManagerImpl implements BirthdayManager {
@@ -48,5 +50,10 @@ public final class BirthdayManagerImpl implements BirthdayManager {
         int month = preferences.getInt(MONTH, DEFAULT);
         int day = preferences.getInt(DAY, DEFAULT);
         return (year != DEFAULT && month != DEFAULT && day != DEFAULT);
+    }
+
+    @Override
+    public void deleteBirthday() {
+        preferences.edit().clear().apply();
     }
 }

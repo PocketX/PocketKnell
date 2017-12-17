@@ -6,7 +6,9 @@ import android.app.Application;
 import org.pocketx.knell.domain.BirthdayManager;
 
 /**
- * Created by zhangchao on 2017/10/31.
+ *
+ * @author Shadow
+ * @date 2017/10/31
  */
 
 public final class Injector {
