@@ -2,6 +2,8 @@ package org.pocketx.knell.base;
 
 import android.app.Application;
 
+import com.squareup.leakcanary.LeakCanary;
+
 import org.pocketx.knell.BuildConfig;
 import org.pocketx.knell.domain.BirthdayManager;
 import org.pocketx.knell.domain.BirthdayManagerImpl;
@@ -22,12 +24,18 @@ public final class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Utils.init(this);
-        birthdayManager = BirthdayManagerImpl.create(this);
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return;
+        }
+        LeakCanary.install(this);
         if (BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
         }
         Timber.i("I am Knell.");
+        Utils.init(this);
+        birthdayManager = BirthdayManagerImpl.create(this);
     }
 
     @Override
