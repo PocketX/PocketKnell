@@ -3,7 +3,6 @@ package org.pocketx.knell.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -20,6 +19,7 @@ import org.pocketx.knell.domain.Birthday;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import timber.log.Timber;
 
 /**
  * 时钟界面
@@ -29,8 +29,6 @@ import butterknife.ButterKnife;
  */
 
 public class KnellActivity extends BaseActivity {
-
-    private static final String TAG = "KnellActivity";
 
     @BindView(R.id.tv_year)
     TextView tvYear;
@@ -45,12 +43,12 @@ public class KnellActivity extends BaseActivity {
     @BindView(R.id.tv_minute)
     TextView tvMinute;
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_knell);
         ButterKnife.bind(this);
+
         Birthday birthday = getBirthdayManager().get();
         DateTime birDateTime = new DateTime(birthday.year, birthday.month, birthday.day, 0, 0);
         Days days = Days.daysBetween(birDateTime, DateTime.now());
@@ -60,19 +58,19 @@ public class KnellActivity extends BaseActivity {
         Years years = Years.yearsBetween(birDateTime, DateTime.now());
         Months months = Months.monthsBetween(birDateTime, DateTime.now());
 
-        Log.d(TAG, "onCreate: 年：" + years.getYears());
-        Log.d(TAG, "onCreate: 月：" + months.getMonths());
-        Log.d(TAG, "onCreate: 周：" + weeks.getWeeks());
-        Log.d(TAG, "onCreate: 天数为：" + days.getDays());
-        Log.d(TAG, "onCreate: 小时数为：" + hours.getHours());
-        Log.d(TAG, "onCreate: 分钟数为：" + minutes.getMinutes());
+        Timber.d("onCreate: 年：%d", years.getYears());
+        Timber.d("onCreate: 月：%d", months.getMonths());
+        Timber.d("onCreate: 周：%d", weeks.getWeeks());
+        Timber.d("onCreate: 天数为：%d", days.getDays());
+        Timber.d("onCreate: 小时数为：%d", hours.getHours());
+        Timber.d("onCreate: 分钟数为：%d", minutes.getMinutes());
 
-        tvYear.setText(years.getYears() + "");
-        tvMonth.setText(months.getMonths() + "");
-        tvWeek.setText(weeks.getWeeks() + "");
-        tvDay.setText(days.getDays() + "");
-        tvHour.setText(hours.getHours() + "");
-        tvMinute.setText(minutes.getMinutes() + "");
+        tvYear.setText(String.valueOf(years.getYears()));
+        tvMonth.setText(String.valueOf(months.getMonths()));
+        tvWeek.setText(String.valueOf(weeks.getWeeks()));
+        tvDay.setText(String.valueOf(days.getDays()));
+        tvHour.setText(String.valueOf(hours.getHours()));
+        tvMinute.setText(String.valueOf(minutes.getMinutes()));
     }
 
 

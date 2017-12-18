@@ -4,20 +4,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import org.pocketx.knell.R;
 import org.pocketx.knell.base.BaseActivity;
 
+import timber.log.Timber;
+
 /**
  * 欢迎界面
+ *
  * @author Shadow
  * @date 2017/10/23 20:48
  */
 
 public class WelcomeActivity extends BaseActivity {
-
-    private static final String TAG = "WelcomeActivity";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,7 +36,7 @@ public class WelcomeActivity extends BaseActivity {
         if (getBirthdayManager().exist()) {
             intent = new Intent(this, KnellActivity.class);
         } else {
-            Log.d(TAG, "onCreate: sp没有值");
+            Timber.d("onCreate: sp没有值");
             intent = new Intent(this, ChooseDateActivity.class);
         }
         startActivity(intent);
