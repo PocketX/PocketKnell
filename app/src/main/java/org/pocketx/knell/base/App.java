@@ -2,6 +2,7 @@ package org.pocketx.knell.base;
 
 import android.app.Application;
 
+import com.jakewharton.threetenabp.AndroidThreeTen;
 import com.squareup.leakcanary.LeakCanary;
 
 import org.pocketx.knell.BuildConfig;
@@ -14,10 +15,10 @@ import timber.log.Timber;
 
 /**
  * @author Shadow
- * @date 2017/10/2215:10
+ * @author shenghaiyang
+ * @date 2017/10/22 15:10
  */
-
-public final class App extends Application {
+public class App extends Application {
 
     private BirthdayManager birthdayManager;
 
@@ -33,6 +34,7 @@ public final class App extends Application {
         if (BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
         }
+        AndroidThreeTen.init(this);
         Timber.i("I am Knell.");
         Utils.init(this);
         birthdayManager = BirthdayManagerImpl.create(this);

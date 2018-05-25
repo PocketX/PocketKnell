@@ -6,12 +6,12 @@ import org.pocketx.knell.domain.BirthdayManager;
 import org.pocketx.knell.utils.Injector;
 
 /**
- *
  * @author Shadow
- * @date 2017/10/2214:16
+ * @author shenghaiyang
+ * @date 2017/10/22 14:16
  */
 
-public class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity {
 
     protected final BirthdayManager getBirthdayManager() {
         return Injector.obtain(getApplication());
