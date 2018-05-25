@@ -27,18 +27,18 @@ import timber.log.Timber;
 
 public class KnellActivity extends BaseActivity {
 
-    @BindView(R.id.tv_year)
-    TextView tvYear;
-    @BindView(R.id.tv_month)
-    TextView tvMonth;
-    @BindView(R.id.tv_week)
-    TextView tvWeek;
-    @BindView(R.id.tv_day)
-    TextView tvDay;
-    @BindView(R.id.tv_hour)
-    TextView tvHour;
-    @BindView(R.id.tv_minute)
-    TextView tvMinute;
+    @BindView(R.id.years)
+    TextView mYearsView;
+    @BindView(R.id.months)
+    TextView mMonthsView;
+    @BindView(R.id.weeks)
+    TextView mWeeksView;
+    @BindView(R.id.days)
+    TextView mDaysView;
+    @BindView(R.id.hours)
+    TextView mHoursView;
+    @BindView(R.id.minutes)
+    TextView mMinutesView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,23 +49,23 @@ public class KnellActivity extends BaseActivity {
         Birthday birthday = getBirthdayManager().get();
         LocalDateTime dateTime = LocalDateTime.of(birthday.year, birthday.month,
                 birthday.day, 0, 0);
-        Duration duration = Duration.between(LocalDateTime.now(), dateTime);
+        Duration duration = Duration.between(dateTime, LocalDateTime.now());
         long days = duration.toDays();
         long hours = duration.toHours();
         long minutes = duration.toMinutes();
-        long weeks = ChronoUnit.WEEKS.between(LocalDateTime.now(), dateTime);
-        long years = ChronoUnit.YEARS.between(LocalDateTime.now(), dateTime);
-        long months = ChronoUnit.MONTHS.between(LocalDateTime.now(), dateTime);
+        long weeks = ChronoUnit.WEEKS.between(dateTime, LocalDateTime.now());
+        long years = ChronoUnit.YEARS.between(dateTime, LocalDateTime.now());
+        long months = ChronoUnit.MONTHS.between(dateTime, LocalDateTime.now());
 
         Timber.d("onCreate: 年：%d 月：%d 周：%d 天数为：%d 小时数为：%d 分钟数为：%d",
                 years, months, weeks, days, hours, minutes);
 
-        tvYear.setText(String.valueOf(years));
-        tvMonth.setText(String.valueOf(months));
-        tvWeek.setText(String.valueOf(weeks));
-        tvDay.setText(String.valueOf(days));
-        tvHour.setText(String.valueOf(hours));
-        tvMinute.setText(String.valueOf(minutes));
+        mYearsView.setText(String.format("%d\n年", years));
+        mMonthsView.setText(String.format("%d\n月", months));
+        mWeeksView.setText(String.format("%d\n周", weeks));
+        mDaysView.setText(String.format("%d\n日", days));
+        mHoursView.setText(String.format("%d\n时", hours));
+        mMinutesView.setText(String.format("%d\n分", minutes));
     }
 
     /**

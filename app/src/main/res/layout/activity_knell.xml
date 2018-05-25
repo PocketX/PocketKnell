@@ -1,181 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backgroundColor">
 
     <Button
         android:id="@+id/clear_button"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Clear"
-        app:layout_constraintRight_toLeftOf="parent" />
+        android:layout_margin="16dp"
+        android:text="@string/label_clear"
+        app:layout_constraintBottom_toTopOf="@+id/years"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/years"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/days"
+        app:layout_constraintEnd_toStartOf="@+id/months"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/clear_button"
+        app:layout_constraintVertical_chainStyle="spread"
+        tools:text="1\n年" />
 
-    <GridLayout
-        android:id="@+id/gridlayout"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginBottom="100dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginStart="20dp"
-        android:columnCount="3"
-        app:layout_constraintBottom_toTopOf="parent">
+    <TextView
+        android:id="@+id/months"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@id/years"
+        app:layout_constraintEnd_toStartOf="@+id/weeks"
+        app:layout_constraintStart_toEndOf="@id/years"
+        app:layout_constraintTop_toTopOf="@id/years"
+        tools:text="1\n月" />
 
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1">
+    <TextView
+        android:id="@+id/weeks"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@id/years"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/months"
+        app:layout_constraintTop_toTopOf="@id/years"
+        tools:text="1\n周" />
 
-            <TextView
-                android:id="@+id/tv_year"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp"
-                android:text="1"
-                android:textSize="18sp" />
+    <TextView
+        android:id="@+id/days"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/hours"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/years"
+        tools:text="1\n日" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="20dp"
-                android:text="@string/year"
-                android:textSize="18sp" />
+    <TextView
+        android:id="@+id/hours"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@id/days"
+        app:layout_constraintEnd_toStartOf="@+id/minutes"
+        app:layout_constraintStart_toEndOf="@id/days"
+        app:layout_constraintTop_toTopOf="@id/days"
+        tools:text="1\n时" />
 
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1">
-
-            <TextView
-                android:id="@+id/tv_month"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp"
-                android:text="1"
-                android:textSize="18sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="20dp"
-                android:text="@string/month"
-                android:textSize="18sp" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1">
-
-            <TextView
-                android:id="@+id/tv_week"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp"
-                android:text="1"
-                android:textSize="18sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="20dp"
-                android:text="@string/week"
-                android:textSize="18sp" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1">
-
-            <TextView
-                android:id="@+id/tv_day"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp"
-                android:text="1"
-                android:textSize="18sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="20dp"
-                android:text="@string/day"
-                android:textSize="18sp" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1">
-
-            <TextView
-                android:id="@+id/tv_hour"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp"
-                android:text="1"
-                android:textSize="18sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="20dp"
-                android:text="@string/hour"
-                android:textSize="18sp" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1">
-
-            <TextView
-                android:id="@+id/tv_minute"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp"
-                android:text="1"
-                android:textSize="18sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="20dp"
-                android:text="@string/minute"
-                android:textSize="18sp" />
-        </RelativeLayout>
-
-
-    </GridLayout>
+    <TextView
+        android:id="@+id/minutes"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@id/days"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/hours"
+        app:layout_constraintTop_toTopOf="@id/days"
+        tools:text="1\n分" />
 
 </android.support.constraint.ConstraintLayout>
