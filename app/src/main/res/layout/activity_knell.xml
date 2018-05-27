@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:text="@string/label_clear"
+        android:textAllCaps="false"
         app:layout_constraintDimensionRatio="2:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -19,8 +20,8 @@
 
     <org.pocketx.knell.view.ClockView
         android:id="@+id/clock_view"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:layout_marginTop="100dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,13 +30,14 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="You have already survived in this world"
+        android:text="@string/survived"
         android:layout_marginTop="20dp"
         android:textStyle="bold"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/clock_view" />
+        app:layout_constraintBottom_toTopOf="@id/years"
+        android:layout_marginBottom="40dp"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
     <TextView
@@ -43,7 +45,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@id/days"
         app:layout_constraintEnd_toStartOf="@+id/months"
         app:layout_constraintHorizontal_chainStyle="spread"
@@ -55,7 +57,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="center"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@id/years"
         app:layout_constraintEnd_toStartOf="@+id/weeks"
         app:layout_constraintStart_toEndOf="@id/years"
@@ -67,7 +69,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="center"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@id/years"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/months"
@@ -79,11 +81,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/hours"
         app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="40dp"
         tools:text="1\n日" />
 
     <TextView
@@ -91,7 +94,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="center"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@id/days"
         app:layout_constraintEnd_toStartOf="@+id/minutes"
         app:layout_constraintStart_toEndOf="@id/days"
@@ -103,7 +106,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="center"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@id/days"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/hours"

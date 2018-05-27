@@ -47,7 +47,7 @@ public class ClockView extends View {
         */
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ClockView, defStyleAttr, 0);
         mHourColor = typedArray.getColor(R.styleable.ClockView_hourColor, Color.BLACK);
-        mMinuteColor = typedArray.getColor(R.styleable.ClockView_minuteColor, Color.BLUE);
+        mMinuteColor = typedArray.getColor(R.styleable.ClockView_minuteColor, Color.BLACK);
         mSecondColor = typedArray.getColor(R.styleable.ClockView_secondColor, Color.RED);
         mEdgeColor = typedArray.getColor(R.styleable.ClockView_edgeColor, Color.BLACK);
 
@@ -71,7 +71,7 @@ public class ClockView extends View {
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeWidth(1);
         //辅助边框
-        canvas.drawRect(0, 0, getWidth(), getHeight(), mPaint);
+//        canvas.drawRect(0, 0, getWidth(), getHeight(), mPaint);
         mPaint.setStrokeWidth(10);
         //变盘边框
         canvas.drawCircle(getWidth() / 2, getHeight() / 2, getWidth() / 2 - 5, mPaint);
@@ -81,8 +81,8 @@ public class ClockView extends View {
         mPaint.setStrokeWidth(hourWidth);
         canvas.save();
         canvas.rotate(360 / 12 * mHour, getWidth() / 2, getHeight() / 2);
-        canvas.drawRect((getWidth() - hourWidth) / 2, ConvertUtils.dp2px(100),
-                (getWidth() + hourWidth) / 2, getHeight() / 2, mPaint);
+        canvas.drawRect((getWidth() - hourWidth) / 2, ConvertUtils.dp2px(70),
+                (getWidth() + hourWidth) / 2, getHeight() / 2 + ConvertUtils.dp2px(10), mPaint);
         canvas.restore();
 
         //分针
@@ -91,8 +91,8 @@ public class ClockView extends View {
         mPaint.setStrokeWidth(minuteWidth);
         canvas.save();
         canvas.rotate(360 / 60 * mMinute, getWidth() / 2, getHeight() / 2);
-        canvas.drawRect((getWidth() - minuteWidth) / 2, ConvertUtils.dp2px(80),
-                (getWidth() + minuteWidth) / 2, getHeight() / 2, mPaint);
+        canvas.drawRect((getWidth() - minuteWidth) / 2, ConvertUtils.dp2px(50),
+                (getWidth() + minuteWidth) / 2, getHeight() / 2+ ConvertUtils.dp2px(15), mPaint);
         canvas.restore();
 
         //秒针
@@ -101,9 +101,15 @@ public class ClockView extends View {
         mPaint.setStrokeWidth(secondWidth);
         canvas.save();
         canvas.rotate(360 / 60 * mSecond, getWidth() / 2, getHeight() / 2);
-        canvas.drawRect((getWidth() - secondWidth) / 2, ConvertUtils.dp2px(60),
-                (getWidth() + secondWidth) / 2, getHeight() / 2, mPaint);
+        canvas.drawRect((getWidth() - secondWidth) / 2, ConvertUtils.dp2px(30),
+                (getWidth() + secondWidth) / 2, getHeight() / 2+ ConvertUtils.dp2px(20), mPaint);
         canvas.restore();
+
+        //画一个红心圆
+        mPaint.setColor(Color.RED);
+        mPaint.setStrokeWidth(1);
+        mPaint.setStyle(Paint.Style.FILL);
+        canvas.drawCircle(getHeight() / 2, getHeight() / 2, ConvertUtils.dp2px(3), mPaint);
 
     }
 
