@@ -2,10 +2,12 @@ package org.pocketx.knell.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.widget.TextView;
 
-import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 import org.pocketx.knell.R;
 import org.pocketx.knell.base.BaseActivity;
 import org.pocketx.knell.domain.Birthday;
@@ -13,10 +15,6 @@ import org.pocketx.knell.view.ClockView;
 import org.threeten.bp.Duration;
 import org.threeten.bp.LocalDateTime;
 import org.threeten.bp.temporal.ChronoUnit;
-
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,7 +31,6 @@ import timber.log.Timber;
 
 public class KnellActivity extends BaseActivity {
 
-
     @BindView(R.id.years)
     TextView mYearsView;
     @BindView(R.id.months)
@@ -49,102 +46,90 @@ public class KnellActivity extends BaseActivity {
     @BindView(R.id.clock_view)
     ClockView mClockView;
 
-    private ScheduledExecutorService mExecutorService;
+    private final Handler mMainHandler = new Handler(Looper.getMainLooper());
+
+    private final Runnable mTicker = new Runnable() {
+        public void run() {
+            onTimeChanged();
+
+            long now = SystemClock.uptimeMillis();
+            long next = now + (1000 - now % 1000);
+
+            mMainHandler.postAtTime(mTicker, next);
+        }
+    };
+
+    private LocalDateTime mBirthdayDateTime;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_knell);
         ButterKnife.bind(this);
-
+        Birthday birthday = getBirthdayManager().get();
+        mBirthdayDateTime = LocalDateTime.of(birthday.year, birthday.month,
+                birthday.day, 0, 0);
 
         //偶然逛知乎看到的，2333
-        Timber.d("dog face\n"+ "─────────▄──────────────▄──── \n"+
-        " ─ wow ──▌▒█───────────▄▀▒▌─── \n"+
-        " ────────▌▒▒▀▄───────▄▀▒▒▒▐─── \n"+
-        " ───────▐▄▀▒▒▀▀▀▀▄▄▄▀▒▒▒▒▒▐─── \n"+
-        " ─────▄▄▀▒▒▒▒▒▒▒▒▒▒▒█▒▒▄█▒▐─── \n"+
-        " ───▄▀▒▒▒▒▒▒ such difference ─ \n"+
-        " ──▐▒▒▒▄▄▄▒▒▒▒▒▒▒▒▒▒▒▒▒▀▄▒▒▌── \n"+
-        " ──▌▒▒▐▄█▀▒▒▒▒▄▀█▄▒▒▒▒▒▒▒█▒▐── \n"+
-        " ─▐▒▒▒▒▒▒▒▒▒▒▒▌██▀▒▒▒▒▒▒▒▒▀▄▌─ \n"+
-        " ─▌▒▀▄██▄▒▒▒▒▒▒▒▒▒▒▒░░░░▒▒▒▒▌─ \n"+
-        " ─▌▀▐▄█▄█▌▄▒▀▒▒▒▒▒▒░░░░░░▒▒▒▐─ \n"+
-        " ▐▒▀▐▀▐▀▒▒▄▄▒▄▒▒▒ electrons ▒▌ \n"+
-        " ▐▒▒▒▀▀▄▄▒▒▒▄▒▒▒▒▒▒░░░░░░▒▒▒▐─ \n"+
-        " ─▌▒▒▒▒▒▒▀▀▀▒▒▒▒▒▒▒▒░░░░▒▒▒▒▌─ \n"+
-        " ─▐▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▐── \n"+
-        " ──▀ amaze ▒▒▒▒▒▒▒▒▒▒▒▄▒▒▒▒▌── \n"+
-        " ────▀▄▒▒▒▒▒▒▒▒▒▒▄▄▄▀▒▒▒▒▄▀─── \n"+
-        " ───▐▀▒▀▄▄▄▄▄▄▀▀▀▒▒▒▒▒▄▄▀───── \n"+
-        " ──▐▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▀▀──────── \n"
-				);
-
-
-
+        Timber.d("dog face\n" + "─────────▄──────────────▄──── \n" +
+                " ─ wow ──▌▒█───────────▄▀▒▌─── \n" +
+                " ────────▌▒▒▀▄───────▄▀▒▒▒▐─── \n" +
+                " ───────▐▄▀▒▒▀▀▀▀▄▄▄▀▒▒▒▒▒▐─── \n" +
+                " ─────▄▄▀▒▒▒▒▒▒▒▒▒▒▒█▒▒▄█▒▐─── \n" +
+                " ───▄▀▒▒▒▒▒▒ such difference ─ \n" +
+                " ──▐▒▒▒▄▄▄▒▒▒▒▒▒▒▒▒▒▒▒▒▀▄▒▒▌── \n" +
+                " ──▌▒▒▐▄█▀▒▒▒▒▄▀█▄▒▒▒▒▒▒▒█▒▐── \n" +
+                " ─▐▒▒▒▒▒▒▒▒▒▒▒▌██▀▒▒▒▒▒▒▒▒▀▄▌─ \n" +
+                " ─▌▒▀▄██▄▒▒▒▒▒▒▒▒▒▒▒░░░░▒▒▒▒▌─ \n" +
+                " ─▌▀▐▄█▄█▌▄▒▀▒▒▒▒▒▒░░░░░░▒▒▒▐─ \n" +
+                " ▐▒▀▐▀▐▀▒▒▄▄▒▄▒▒▒ electrons ▒▌ \n" +
+                " ▐▒▒▒▀▀▄▄▒▒▒▄▒▒▒▒▒▒░░░░░░▒▒▒▐─ \n" +
+                " ─▌▒▒▒▒▒▒▀▀▀▒▒▒▒▒▒▒▒░░░░▒▒▒▒▌─ \n" +
+                " ─▐▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▐── \n" +
+                " ──▀ amaze ▒▒▒▒▒▒▒▒▒▒▒▄▒▒▒▒▌── \n" +
+                " ────▀▄▒▒▒▒▒▒▒▒▒▒▄▄▄▀▒▒▒▒▄▀─── \n" +
+                " ───▐▀▒▀▄▄▄▄▄▄▀▀▀▒▒▒▒▒▄▄▀───── \n" +
+                " ──▐▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▀▀──────── \n"
+        );
 
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        //创建计时器来刷新文字
-        mExecutorService = new ScheduledThreadPoolExecutor(1,
-                new BasicThreadFactory.Builder().namingPattern("Knell-scheduled").daemon(true).build());
-        mExecutorService.scheduleAtFixedRate(new Runnable() {
-            @Override
-            public void run() {
-                refresh();
-            }
-        }, 0, 1000, TimeUnit.MILLISECONDS);
+    protected void onResume() {
+        super.onResume();
+        mTicker.run();
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
-        mExecutorService.shutdownNow();
+    protected void onPause() {
+        super.onPause();
+        mMainHandler.removeCallbacks(mTicker);
     }
 
     /**
      * 刷新时间显示
      */
-    private void refresh() {
-        //时钟显示
+    private void onTimeChanged() {
         LocalDateTime now = LocalDateTime.now();
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mClockView.setClockData(now.getHour(), now.getMinute(),now.getSecond() );
-            }
-        });
-
-
-        //文字显示
-        Birthday birthday = getBirthdayManager().get();
-        LocalDateTime dateTime = LocalDateTime.of(birthday.year, birthday.month,
-                birthday.day, 0, 0);
-        Duration duration = Duration.between(dateTime, LocalDateTime.now());
+        Duration duration = Duration.between(mBirthdayDateTime, now);
         long days = duration.toDays();
         long hours = duration.toHours();
         long minutes = duration.toMinutes();
-        long weeks = ChronoUnit.WEEKS.between(dateTime, LocalDateTime.now());
-        long years = ChronoUnit.YEARS.between(dateTime, LocalDateTime.now());
-        long months = ChronoUnit.MONTHS.between(dateTime, LocalDateTime.now());
+        mBirthdayDateTime.until(now, ChronoUnit.WEEKS);
 
-        Timber.d("onCreate: 年：%d 月：%d 周：%d 天数为：%d 小时数为：%d 分钟数为：%d",
-                years, months, weeks, days, hours, minutes);
+        long weeks = duration.getSeconds() / ChronoUnit.WEEKS.getDuration().getSeconds();
+        long years = duration.getSeconds() / ChronoUnit.YEARS.getDuration().getSeconds();
+        long months = duration.getSeconds() / ChronoUnit.MONTHS.getDuration().getSeconds();
 
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mYearsView.setText(String.format("%d\n年", years));
-                mMonthsView.setText(String.format("%d\n月", months));
-                mWeeksView.setText(String.format("%d\n周", weeks));
-                mDaysView.setText(String.format("%d\n日", days));
-                mHoursView.setText(String.format("%d\n时", hours));
-                mMinutesView.setText(String.format("%d\n分", minutes));
-            }
-        });
+        mClockView.setClockData(now.getHour(), now.getMinute(), now.getSecond());
+        mYearsView.setText(String.format("%d\n年", years));
+        mMonthsView.setText(String.format("%d\n月", months));
+        mWeeksView.setText(String.format("%d\n周", weeks));
+        mDaysView.setText(String.format("%d\n日", days));
+        mHoursView.setText(String.format("%d\n时", hours));
+        mMinutesView.setText(String.format("%d\n分", minutes));
+//        Timber.d("onCreate: 年：%d 月：%d 周：%d 天数为：%d 小时数为：%d 分钟数为：%d",
+//                years, months, weeks, days, hours, minutes);
     }
 
     /**
