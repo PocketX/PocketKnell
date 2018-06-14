@@ -2,9 +2,6 @@ package org.pocketx.knell.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.widget.TextView;
 
@@ -16,9 +13,14 @@ import org.threeten.bp.Duration;
 import org.threeten.bp.LocalDateTime;
 import org.threeten.bp.temporal.ChronoUnit;
 
+import java.util.concurrent.TimeUnit;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import timber.log.Timber;
 
 /**
@@ -46,20 +48,9 @@ public class KnellActivity extends BaseActivity {
     @BindView(R.id.clock_view)
     ClockView mClockView;
 
-    private final Handler mMainHandler = new Handler(Looper.getMainLooper());
-
-    private final Runnable mTicker = new Runnable() {
-        public void run() {
-            onTimeChanged();
-
-            long now = SystemClock.uptimeMillis();
-            long next = now + (1000 - now % 1000);
-
-            mMainHandler.postAtTime(mTicker, next);
-        }
-    };
-
     private LocalDateTime mBirthdayDateTime;
+
+    private final CompositeDisposable disposables = new CompositeDisposable();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -91,19 +82,15 @@ public class KnellActivity extends BaseActivity {
                 " ───▐▀▒▀▄▄▄▄▄▄▀▀▀▒▒▒▒▒▄▄▀───── \n" +
                 " ──▐▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▀▀──────── \n"
         );
-
+        disposables.add(Observable.interval(0, 1, TimeUnit.SECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(period -> onTimeChanged()));
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        mTicker.run();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        mMainHandler.removeCallbacks(mTicker);
+    protected void onDestroy() {
+        super.onDestroy();
+        disposables.dispose();
     }
 
     /**
@@ -122,12 +109,12 @@ public class KnellActivity extends BaseActivity {
         long months = duration.getSeconds() / ChronoUnit.MONTHS.getDuration().getSeconds();
 
         mClockView.setClockData(now.getHour(), now.getMinute(), now.getSecond());
-        mYearsView.setText(String.format("%d\n年", years));
-        mMonthsView.setText(String.format("%d\n月", months));
-        mWeeksView.setText(String.format("%d\n周", weeks));
-        mDaysView.setText(String.format("%d\n日", days));
-        mHoursView.setText(String.format("%d\n时", hours));
-        mMinutesView.setText(String.format("%d\n分", minutes));
+        mYearsView.setText(String.format("%s\n年", years));
+        mMonthsView.setText(String.format("%s\n月", months));
+        mWeeksView.setText(String.format("%s\n周", weeks));
+        mDaysView.setText(String.format("%s\n日", days));
+        mHoursView.setText(String.format("%s\n时", hours));
+        mMinutesView.setText(String.format("%s\n分", minutes));
 //        Timber.d("onCreate: 年：%d 月：%d 周：%d 天数为：%d 小时数为：%d 分钟数为：%d",
 //                years, months, weeks, days, hours, minutes);
     }
@@ -143,10 +130,3 @@ public class KnellActivity extends BaseActivity {
     }
 
 }
-
-
-
-
-
-
-

@@ -1,14 +1,18 @@
 package org.pocketx.knell.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 
 import org.pocketx.knell.R;
 import org.pocketx.knell.base.BaseActivity;
 
-import timber.log.Timber;
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 
 /**
  * 欢迎界面
@@ -19,27 +23,36 @@ import timber.log.Timber;
 
 public class WelcomeActivity extends BaseActivity {
 
+    private final CompositeDisposable disposables = new CompositeDisposable();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
-
-        new Handler().postDelayed(this::checkSP, 1500);
+        disposables.add(Observable.fromCallable(this::birthdayExist)
+                .delay(1500, TimeUnit.MILLISECONDS)
+                .map(this::activityClass)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::openPage));
     }
 
-    /**
-     * 根据SP中的值判断跳转界面
-     */
-    private void checkSP() {
-        //判断sp中是否存储有值，如果有，跳转到时钟界面
-        Intent intent;
-        if (getBirthdayManager().exist()) {
-            intent = new Intent(this, KnellActivity.class);
-        } else {
-            Timber.d("onCreate: sp没有值");
-            intent = new Intent(this, ChooseDateActivity.class);
-        }
-        startActivity(intent);
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        disposables.dispose();
+    }
+
+    private boolean birthdayExist() {
+        return getBirthdayManager().exist();
+    }
+
+    private Class<? extends Activity> activityClass(boolean exist) {
+        return exist ? KnellActivity.class : ChooseDateActivity.class;
+    }
+
+    private void openPage(Class<? extends Activity> activityClass) {
+        startActivity(new Intent(this, activityClass));
         finish();
     }
+
 }

@@ -3,7 +3,7 @@
     package="org.pocketx.knell">
 
     <application
-        android:name=".base.App"
+        android:name=".base.KnellApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"

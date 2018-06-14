@@ -18,7 +18,7 @@ import timber.log.Timber;
  * @author shenghaiyang
  * @date 2017/10/22 15:10
  */
-public class App extends Application {
+public class KnellApp extends Application {
 
     private BirthdayManager birthdayManager;
 
@@ -31,9 +31,6 @@ public class App extends Application {
             return;
         }
         LeakCanary.install(this);
-        if (BuildConfig.DEBUG) {
-            Timber.plant(new Timber.DebugTree());
-        }
         AndroidThreeTen.init(this);
         Timber.i("I am Knell.");
         Utils.init(this);
