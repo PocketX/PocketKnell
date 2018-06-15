@@ -5,6 +5,7 @@
 
     <application
         android:name=".KnellDebugApp"
-        tools:replace="android:name" />
+        tools:replace="android:name"
+        tools:ignore="GoogleAppIndexingWarning" />
 
 </manifest>

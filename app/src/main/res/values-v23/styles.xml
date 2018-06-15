@@ -1,0 +1,7 @@
+<resources>
+
+    <style name="KnellAppTheme" parent="KnellBaseTheme">
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+
+</resources>

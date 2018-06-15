@@ -1,4 +1,4 @@
-package org.pocketx.knell.base;
+package org.pocketx.knell;
 
 import android.app.Application;
 
@@ -25,12 +25,7 @@ public class KnellApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        if (LeakCanary.isInAnalyzerProcess(this)) {
-            // This process is dedicated to LeakCanary for heap analysis.
-            // You should not init your app in this process.
-            return;
-        }
-        LeakCanary.install(this);
+
         AndroidThreeTen.init(this);
         Timber.i("I am Knell.");
         Utils.init(this);
