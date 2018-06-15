@@ -2,14 +2,15 @@ language: android
 
 android:
   components:
+    - tools # to get the new `repository-11.xml`
+    - platform-tools #latest
     - build-tools-28.0.0
     - android-28
-    - android-22
-    - extra-google-m2repository
-    - extra-android-m2repository
+
     - sys-img-armeabi-v7a-android-22
   licenses:
       - '.+'
+      - 'android-sdk-license-.+'
 
 before_script:
   - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a
