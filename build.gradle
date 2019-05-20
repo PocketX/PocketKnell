@@ -4,8 +4,6 @@ buildscript {
             'compileSdk': 28,
             'minSdk'    : 21,
             'targetSdk' : 28,
-
-            'navigation': '1.0.0'
     ]
     repositories {
         google()

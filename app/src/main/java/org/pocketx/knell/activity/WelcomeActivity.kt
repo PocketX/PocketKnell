@@ -34,11 +34,6 @@ class WelcomeActivity : BaseActivity() {
         mMainHandler.removeCallbacks(mRunnable)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        mMainHandler.removeCallbacks(mRunnable)
-    }
-
     private fun openPage() {
         val exist = birthdayManager.exist()
         val clazz = if (exist) KnellActivity::class.java else ChooseDateActivity::class.java
