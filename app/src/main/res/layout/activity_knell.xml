@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -17,7 +17,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <org.pocketx.knell.view.ClockView
         android:id="@+id/clock_view"
         android:layout_width="200dp"
@@ -30,87 +29,87 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/survived"
         android:layout_marginTop="20dp"
-        android:textStyle="bold"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/years"
         android:layout_marginBottom="40dp"
+        android:text="@string/survived"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/years_view"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
 
     <TextView
-        android:id="@+id/years"
+        android:id="@+id/years_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@id/days"
-        app:layout_constraintEnd_toStartOf="@+id/months"
+        app:layout_constraintBottom_toTopOf="@id/days_view"
+        app:layout_constraintEnd_toStartOf="@+id/months_view"
         app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintStart_toStartOf="parent"
         tools:text="1\n年" />
 
     <TextView
-        android:id="@+id/months"
+        android:id="@+id/months_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="center"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@id/years"
-        app:layout_constraintEnd_toStartOf="@+id/weeks"
-        app:layout_constraintStart_toEndOf="@id/years"
-        app:layout_constraintTop_toTopOf="@id/years"
+        app:layout_constraintBottom_toBottomOf="@id/years_view"
+        app:layout_constraintEnd_toStartOf="@+id/weeks_view"
+        app:layout_constraintStart_toEndOf="@id/years_view"
+        app:layout_constraintTop_toTopOf="@id/years_view"
         tools:text="1\n月" />
 
     <TextView
-        android:id="@+id/weeks"
+        android:id="@+id/weeks_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="center"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@id/years"
+        app:layout_constraintBottom_toBottomOf="@id/years_view"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/months"
-        app:layout_constraintTop_toTopOf="@id/years"
+        app:layout_constraintStart_toEndOf="@id/months_view"
+        app:layout_constraintTop_toTopOf="@id/years_view"
         tools:text="1\n周" />
 
     <TextView
-        android:id="@+id/days"
+        android:id="@+id/days_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
         android:gravity="center"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/hours"
+        app:layout_constraintEnd_toStartOf="@+id/hours_view"
         app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginBottom="40dp"
         tools:text="1\n日" />
 
     <TextView
-        android:id="@+id/hours"
+        android:id="@+id/hours_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="center"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@id/days"
-        app:layout_constraintEnd_toStartOf="@+id/minutes"
-        app:layout_constraintStart_toEndOf="@id/days"
-        app:layout_constraintTop_toTopOf="@id/days"
+        app:layout_constraintBottom_toBottomOf="@id/days_view"
+        app:layout_constraintEnd_toStartOf="@+id/minutes_view"
+        app:layout_constraintStart_toEndOf="@id/days_view"
+        app:layout_constraintTop_toTopOf="@id/days_view"
         tools:text="1\n时" />
 
     <TextView
-        android:id="@+id/minutes"
+        android:id="@+id/minutes_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="center"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@id/days"
+        app:layout_constraintBottom_toBottomOf="@id/days_view"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/hours"
-        app:layout_constraintTop_toTopOf="@id/days"
+        app:layout_constraintStart_toEndOf="@id/hours_view"
+        app:layout_constraintTop_toTopOf="@id/days_view"
         tools:text="1\n分" />
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

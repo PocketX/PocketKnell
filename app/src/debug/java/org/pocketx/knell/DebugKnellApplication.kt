@@ -3,7 +3,12 @@ package org.pocketx.knell
 import com.squareup.leakcanary.LeakCanary
 import timber.log.Timber
 
-class KnellDebugApp : KnellApp() {
+/**
+ * Debug Kell Application
+ *
+ * @author shenghaiyang
+ */
+class DebugKnellApplication : KnellApplication() {
 
     override fun onCreate() {
         Timber.plant(Timber.DebugTree())
@@ -15,4 +20,6 @@ class KnellDebugApp : KnellApp() {
         }
         LeakCanary.install(this)
     }
+
+
 }

@@ -4,8 +4,8 @@
     package="org.pocketx.knell">
 
     <application
-        android:name=".KnellDebugApp"
-        tools:replace="android:name"
-        tools:ignore="GoogleAppIndexingWarning" />
+        android:name=".DebugKnellApplication"
+        tools:ignore="GoogleAppIndexingWarning"
+        tools:replace="android:name" />
 
 </manifest>

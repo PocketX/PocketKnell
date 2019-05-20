@@ -10,4 +10,5 @@
     <string name="minute">分</string>
     <string name="label_clear">Clear</string>
     <string name="survived">You have already survived in this world</string>
+    <string name="welcome_tips">除了时间，什么也没有  除了时间我什么也不缺</string>
 </resources>
